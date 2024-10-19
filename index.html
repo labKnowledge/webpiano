@@ -184,13 +184,19 @@
   ];
 
   const songs = {
-    twinkle: ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'],
-    happy: ['C', 'C', 'D', 'C', 'F', 'E', 'C', 'C', 'D', 'C', 'G', 'F'],
-    jingle: ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'G'],
-    frosty: ['C', 'C', 'C', 'D', 'E', 'E', 'D', 'C', 'C', 'C', 'D', 'E', 'E', 'D', 'C'],
-    mary: ['E', 'D', 'C', 'D', 'E', 'E', 'E', 'D', 'D', 'D', 'E', 'D', 'C'],
-    ode: ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D', 'E', 'D', 'C']
-  };
+  twinkle: ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C',
+            'G', 'G', 'F', 'F', 'E', 'E', 'D', 'G', 'G', 'F', 'F', 'E', 'E', 'D'],
+  happy: ['C', 'C', 'D', 'C', 'F', 'E', 'C', 'C', 'D', 'C', 'G', 'F',
+          'C', 'C', 'C', 'A', 'F', 'E', 'D', 'B', 'B', 'A', 'F', 'G', 'F'],
+  jingle: ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'G',
+           'E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'G', 'G', 'F', 'D', 'C'],
+  frosty: ['C', 'C', 'C', 'D', 'E', 'E', 'D', 'C', 'C', 'C', 'D', 'E', 'E', 'D', 'C',
+           'C', 'C', 'C', 'A', 'G', 'F', 'E', 'D', 'F', 'G', 'C', 'B', 'C'],
+  mary: ['E', 'D', 'C', 'D', 'E', 'E', 'E', 'D', 'D', 'D', 'E', 'G', 'G',
+         'E', 'D', 'C', 'D', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'C'],
+  ode: ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D',
+        'E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'D', 'C', 'C']
+};
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
