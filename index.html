@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎹 Web Piano</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .title {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+  }
+  .display {
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 5px 10px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .piano {
+    display: flex;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    height: 120px;
+  }
+  .key {
+    flex-grow: 1;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .key:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  .key:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  .key.black {
+    background-color: #333;
+    height: 70px;
+    margin-left: -10px;
+    margin-right: -10px;
+    z-index: 1;
+    width: 20px;
+    flex-grow: 0;
+  }
+  .key.active {
+    background-color: #e0e0e0;
+    transform: scale(0.98);
+  }
+  .key.black.active {
+    background-color: #555;
+  }
+  .controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+  select, button, input[type="range"] {
+    font-size: 14px;
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 50px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  }
+  select {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    padding-right: 25px;
+  }
+  button:hover, select:hover, input[type="range"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  }
+  button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .tempo-control {
+    display: flex;
+    align-items: center;
+  }
+  .tempo-label {
+    margin-right: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1 class="title">🎹 Web Piano</h1>
+    <div class="display" id="noteDisplay">🎵 Current Notes: -</div>
+  </div>
+  <div class="piano" id="piano"></div>
+  <div class="controls">
+    <select id="songSelect">
+      <option value="">🎼 Select a song</option>
+      <option value="twinkle" selected>✨ Twinkle Twinkle Little Star</option>
+      <option value="happy">🎂 Happy Birthday</option>
+      <option value="jingle">🎶 Jingle Bells</option>
+      <option value="frosty">☃️ Frosty the Snowman</option>
+      <option value="mary">🎵 Mary Had a Little Lamb</option>
+      <option value="ode">🎻 Ode to Joy</option>
+    </select>
+    <button id="playButton">▶️ Play</button>
+    <div class="tempo-control">
+      <label class="tempo-label" for="tempoRange">Tempo:</label>
+      <input type="range" id="tempoRange" min="100" max="300" value="120">
+      <span id="tempoValue">120 BPM</span>
+    </div>
+  </div>
+</div>
+<script>
+  const piano = document.getElementById('piano');
+  const noteDisplay = document.getElementById('noteDisplay');
+  const songSelect = document.getElementById('songSelect');
+  const playButton = document.getElementById('playButton');
+  const tempoRange = document.getElementById('tempoRange');
+  const tempoValue = document.getElementById('tempoValue');
+
+  const notes = [
+    { note: 'C', freq: 261.63, color: 'white' },
+    { note: 'C#', freq: 277.18, color: 'black' },
+    { note: 'D', freq: 293.66, color: 'white' },
+    { note: 'D#', freq: 311.13, color: 'black' },
+    { note: 'E', freq: 329.63, color: 'white' },
+    { note: 'F', freq: 349.23, color: 'white' },
+    { note: 'F#', freq: 369.99, color: 'black' },
+    { note: 'G', freq: 392.00, color: 'white' },
+    { note: 'G#', freq: 415.30, color: 'black' },
+    { note: 'A', freq: 440.00, color: 'white' },
+    { note: 'A#', freq: 466.16, color: 'black' },
+    { note: 'B', freq: 493.88, color: 'white' },
+    { note: 'C2', freq: 523.25, color: 'white' },
+    { note: 'C#2', freq: 554.37, color: 'black' },
+    { note: 'D2', freq: 587.33, color: 'white' },
+    { note: 'D#2', freq: 622.25, color: 'black' },
+    { note: 'E2', freq: 659.25, color: 'white' },
+    { note: 'F2', freq: 698.46, color: 'white' },
+    { note: 'F#2', freq: 739.99, color: 'black' },
+    { note: 'G2', freq: 783.99, color: 'white' },
+    { note: 'G#2', freq: 830.61, color: 'black' },
+    { note: 'A2', freq: 880.00, color: 'white' },
+    { note: 'A#2', freq: 932.33, color: 'black' },
+    { note: 'B2', freq: 987.77, color: 'white' }
+  ];
+
+  const songs = {
+    twinkle: ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'],
+    happy: ['C', 'C', 'D', 'C', 'F', 'E', 'C', 'C', 'D', 'C', 'G', 'F'],
+    jingle: ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'G'],
+    frosty: ['C', 'C', 'C', 'D', 'E', 'E', 'D', 'C', 'C', 'C', 'D', 'E', 'E', 'D', 'C'],
+    mary: ['E', 'D', 'C', 'D', 'E', 'E', 'E', 'D', 'D', 'D', 'E', 'D', 'C'],
+    ode: ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D', 'E', 'D', 'C']
+  };
+
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+  notes.forEach(noteObj => {
+    const key = document.createElement('div');
+    key.className = `key ${noteObj.color}`;
+    key.dataset.note = noteObj.note;
+    key.dataset.freq = noteObj.freq;
+    piano.appendChild(key);
+
+    key.addEventListener('mousedown', playNote);
+    key.addEventListener('mouseup', stopNote);
+    key.addEventListener('mouseleave', stopNote);
+  });
+
+  const activeKeys = new Set();
+
+  function createSound(frequency) {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    const filterNode = audioContext.createBiquadFilter();
+
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+    filterNode.type = 'lowpass';
+    filterNode.frequency.setValueAtTime(1000, audioContext.currentTime);
+    filterNode.Q.setValueAtTime(1, audioContext.currentTime);
+
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 1.5);
+
+    oscillator.connect(filterNode);
+    filterNode.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 1.5);
+
+    return { oscillator, gainNode };
+  }
+
+  function playNote(e) {
+    const freq = parseFloat(e.target.dataset.freq);
+    const note = e.target.dataset.note;
+
+    if (!activeKeys.has(note)) {
+      const sound = createSound(freq);
+      e.target.sound = sound;
+      activeKeys.add(note);
+      noteDisplay.textContent = `🎵 Current Notes: ${Array.from(activeKeys).join(', ')}`;
+    }
+
+    e.target.classList.add('active');
+  }
+
+  function stopNote(e) {
+    if (e.target.sound) {
+      e.target.sound.gainNode.gain.cancelScheduledValues(audioContext.currentTime);
+      e.target.sound.gainNode.gain.setValueAtTime(e.target.sound.gainNode.gain.value, audioContext.currentTime);
+      e.target.sound.gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
+      setTimeout(() => {
+        e.target.sound.oscillator.stop();
+        e.target.sound = null;
+      }, 30);
+    }
+    e.target.classList.remove('active');
+    activeKeys.delete(e.target.dataset.note);
+    noteDisplay.textContent = `🎵 Current Notes: ${Array.from(activeKeys).join(', ')}`;
+  }
+
+  function getKeyByNote(note) {
+    return Array.from(piano.children).find(key => key.dataset.note === note);
+  }
+
+  function playSong(song) {
+    let index = 0;
+    const tempo = parseInt(tempoRange.value);
+    const interval = setInterval(() => {
+      if (index < song.length) {
+        const key = getKeyByNote(song[index]);
+        if (key) {
+          playNote({ target: key });
+          setTimeout(() => stopNote({ target: key }), 400);
+        }
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 60000 / tempo); // Adjust interval based on tempo
+  }
+
+  playButton.addEventListener('click', () => {
+    const selectedSong = songSelect.value;
+    if (selectedSong && songs[selectedSong]) {
+      playSong(songs[selectedSong]);
+    } else {
+      alert('🎵 Please select a song first');
+    }
+  });
+
+  tempoRange.addEventListener('input', () => {
+    tempoValue.textContent = `${tempoRange.value} BPM`;
+  });
+
+  // 默认选中并播放 Twinkle Twinkle Little Star
+  window.onload = function() {
+    songSelect.value = 'twinkle';
+    playSong(songs.twinkle);
+  };
+</script>
+</body>
+</html>
