@@ -196,44 +196,22 @@
   { note: 'C6', freq: 1046.50, color: 'white' }
 ];
 
-const songs = {
-    twinkle: [
-      {note: 'C4', duration: 1}, {note: 'C4', duration: 1}, {note: 'G4', duration: 1}, {note: 'G4', duration: 1},
-      {note: 'A4', duration: 1}, {note: 'A4', duration: 1}, {note: 'G4', duration: 2},
-      {note: 'F4', duration: 1}, {note: 'F4', duration: 1}, {note: 'E4', duration: 1}, {note: 'E4', duration: 1},
-      {note: 'D4', duration: 1}, {note: 'D4', duration: 1}, {note: 'C4', duration: 2}
-    ],
-    happy: [
-      {note: 'C4', duration: 0.75}, {note: 'C4', duration: 0.25}, {note: 'D4', duration: 1}, {note: 'C4', duration: 1}, {note: 'F4', duration: 1},
-      {note: 'E4', duration: 2}, {note: 'C4', duration: 0.75}, {note: 'C4', duration: 0.25}, {note: 'D4', duration: 1}, {note: 'C4', duration: 1},
-      {note: 'G4', duration: 1}, {note: 'F4', duration: 2}, {note: 'C4', duration: 0.75}, {note: 'C4', duration: 0.25}, {note: 'C5', duration: 1},
-      {note: 'A4', duration: 1}, {note: 'F4', duration: 1}, {note: 'E4', duration: 1}, {note: 'D4', duration: 2}
-    ],
-    jingle: [
-      {note: 'E4', duration: 1}, {note: 'E4', duration: 1}, {note: 'E4', duration: 2},
-      {note: 'E4', duration: 1}, {note: 'E4', duration: 1}, {note: 'E4', duration: 2},
-      {note: 'E4', duration: 1}, {note: 'G4', duration: 1}, {note: 'C4', duration: 1.5}, {note: 'D4', duration: 0.5},
-      {note: 'E4', duration: 4}
-    ],
-    frosty: [
-      {note: 'E4', duration: 1}, {note: 'F4', duration: 0.5}, {note: 'G4', duration: 1}, {note: 'G4', duration: 0.5},
-      {note: 'E4', duration: 1}, {note: 'F4', duration: 0.5}, {note: 'G4', duration: 1}, {note: 'G4', duration: 0.5},
-      {note: 'E4', duration: 1}, {note: 'F4', duration: 0.5}, {note: 'G4', duration: 1}, {note: 'G4', duration: 0.5},
-      {note: 'E4', duration: 1}, {note: 'F4', duration: 0.5}, {note: 'G4', duration: 2}
-    ],
-    mary: [
-      {note: 'E4', duration: 1}, {note: 'D4', duration: 1}, {note: 'C4', duration: 1}, {note: 'D4', duration: 1},
-      {note: 'E4', duration: 1}, {note: 'E4', duration: 1}, {note: 'E4', duration: 2},
-      {note: 'D4', duration: 1}, {note: 'D4', duration: 1}, {note: 'D4', duration: 2},
-      {note: 'E4', duration: 1}, {note: 'G4', duration: 1}, {note: 'G4', duration: 2}
-    ],
-    ode: [
-      {note: 'E4', duration: 1}, {note: 'E4', duration: 1}, {note: 'F4', duration: 1}, {note: 'G4', duration: 1},
-      {note: 'G4', duration: 1}, {note: 'F4', duration: 1}, {note: 'E4', duration: 1}, {note: 'D4', duration: 1},
-      {note: 'C4', duration: 1}, {note: 'C4', duration: 1}, {note: 'D4', duration: 1}, {note: 'E4', duration: 1},
-      {note: 'E4', duration: 1.5}, {note: 'D4', duration: 0.5}, {note: 'D4', duration: 2}
-    ]
-  };
+  const songs = {
+  twinkle: ['C', 'C', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C',
+            'G', 'G', 'F', 'F', 'E', 'E', 'D', 'G', 'G', 'F', 'F', 'E', 'E', 'D'],
+  happy: ['C', 'C', 'D', 'C', 'F', 'E', 'C', 'C', 'D', 'C', 'G', 'F',
+          'C', 'C', 'C', 'A', 'F', 'E', 'D', 'B', 'B', 'A', 'F', 'G', 'F'],
+  jingle: ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'G',
+           'E', 'E', 'E', 'E', 'E', 'E', 'E', 'G', 'C', 'D', 'E', 'F', 'F', 'F', 'F', 'F', 'E', 'E', 'E', 'G', 'G', 'F', 'D', 'C'],
+  frosty: ['C', 'C', 'C', 'D', 'E', 'E', 'D', 'C', 'C', 'C', 'D', 'E', 'E', 'D', 'C',
+           'C', 'C', 'C', 'A', 'G', 'F', 'E', 'D', 'F', 'G', 'C', 'B', 'C'],
+  mary: ['E', 'D', 'C', 'D', 'E', 'E', 'E', 'D', 'D', 'D', 'E', 'G', 'G',
+         'E', 'D', 'C', 'D', 'E', 'E', 'E', 'E', 'D', 'D', 'E', 'D', 'C'],
+  ode: ['E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'E', 'D', 'D',
+        'E', 'E', 'F', 'G', 'G', 'F', 'E', 'D', 'C', 'C', 'D', 'E', 'D', 'C', 'C']
+};
+
+
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
   notes.forEach(noteObj => {
@@ -309,39 +287,21 @@ const songs = {
     return Array.from(piano.children).find(key => key.dataset.note === note);
   }
 
-
-
   function playSong(song) {
-    let time = audioContext.currentTime;
+    let index = 0;
     const tempo = parseInt(tempoRange.value);
-    const beatDuration = 60 / tempo;
-
-    song.forEach(note => {
-      const key = getKeyByNote(note.note);
-      if (key) {
-        const freq = parseFloat(key.dataset.freq);
-        const noteDuration = note.duration * beatDuration;
-        
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.type = 'triangle';
-        oscillator.frequency.setValueAtTime(freq, time);
-        
-        gainNode.gain.setValueAtTime(0.5, time);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, time + noteDuration);
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.start(time);
-        oscillator.stop(time + noteDuration);
-
-        key.classList.add('active');
-        setTimeout(() => key.classList.remove('active'), noteDuration * 1000);
+    const interval = setInterval(() => {
+      if (index < song.length) {
+        const key = getKeyByNote(song[index]);
+        if (key) {
+          playNote({ target: key });
+          setTimeout(() => stopNote({ target: key }), 400);
+        }
+        index++;
+      } else {
+        clearInterval(interval);
       }
-      time += noteDuration;
-    });
+    }, 60000 / tempo); // Adjust interval based on tempo
   }
 
   playButton.addEventListener('click', () => {
@@ -353,11 +313,18 @@ const songs = {
     }
   });
 
+
+
+
   tempoRange.addEventListener('input', () => {
     tempoValue.textContent = `${tempoRange.value} BPM`;
   });
 
-
+  // 默认选中并播放 Twinkle Twinkle Little Star
+  window.onload = function() {
+    songSelect.value = 'twinkle';
+    playSong(songs.twinkle);
+  };
 </script>
 </body>
 </html>
